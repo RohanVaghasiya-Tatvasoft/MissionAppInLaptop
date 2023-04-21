@@ -19,9 +19,9 @@ builder.Services.AddScoped<IStoryMethodRepository, StoryMethodRepository>();
 builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie(option =>
 {
     option.ExpireTimeSpan = TimeSpan.FromMinutes(60 * 1);
-    option.LoginPath = "/Auth/Login";
-    option.AccessDeniedPath = "/Auth/Login";
-    option.LogoutPath = "/Auth/Logout";
+    option.LoginPath = "/Customer/Auth/Login";
+    option.AccessDeniedPath = "/Customer/Auth/Login";
+    option.LogoutPath = "/Customer/Auth/Logout";
 });
 builder.Services.AddSession(option =>
 {
@@ -35,7 +35,7 @@ var app = builder.Build();
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
 {
-    app.UseExceptionHandler("/Auth/Error");
+    app.UseExceptionHandler("/Customer/Auth/Error");
     // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
     app.UseHsts();
 }
@@ -50,6 +50,6 @@ app.UseAuthorization();
 
 app.MapControllerRoute(
     name: "default",
-    pattern: "{area=Admins}/{controller=Admin}/{action=AdminBannerDetails}/{id?}");
+    pattern: "{area=Customer}/{controller=Auth}/{action=Login}/{id?}");
 
 app.Run();
